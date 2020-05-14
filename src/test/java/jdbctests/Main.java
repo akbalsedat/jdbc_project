@@ -18,6 +18,14 @@ public class  Main {
                     + resultSet.getString(3));
         }
 
+        DatabaseMetaData databaseMetaData = connection.getMetaData();
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+        System.out.println("*****************************");
+        System.out.println("JDBC driver: "+databaseMetaData.getDriverName());
+        System.out.println("JDBC driver version: "+databaseMetaData.getDriverVersion());
+        System.out.println("Database name: "+databaseMetaData.getDatabaseProductName());
+        System.out.println("Database version: "+databaseMetaData.getDatabaseProductVersion());
+
             // close connections
         resultSet.close();
         statement.close();
