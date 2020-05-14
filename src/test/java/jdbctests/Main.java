@@ -9,13 +9,13 @@ public class  Main {
         String oracleDbPassword = "hr";
 
         Connection connection = DriverManager.getConnection(oracleDbUrl, oracleDbUsername, oracleDbPassword);
-        Statement statement = connection.createStatement();
+        Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY);
 
         ResultSet resultSet = statement.executeQuery("SELECT * FROM COUNTRIES");
-        while (resultSet.next() != false) {
-            System.out.println(resultSet.getString("COUNTRY_ID"));
-            System.out.println(resultSet.getString("REGION_ID"));
-            System.out.println(resultSet.getString("COUNTRY_NAME"));
+        while (resultSet.next()) {
+            System.out.println(resultSet.getString( 1) + " " +resultSet.getString(2) + " "
+                    + resultSet.getString(3));
         }
 
             // close connections
