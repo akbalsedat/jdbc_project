@@ -1,4 +1,4 @@
-package jdbctests;
+package jdbctests.day1;
 
 import java.sql.*;
 
@@ -33,16 +33,15 @@ public class  Main {
         resultSet.beforeFirst();
 
         for (int columnIndex = 1; columnIndex <= resultSetMetaData.getColumnCount(); columnIndex++) {
-            System.out.printf("%-15s", resultSetMetaData.getColumnName(columnIndex));
+            System.out.printf("%-20s", resultSetMetaData.getColumnName(columnIndex));
         }
 
         while(resultSet.next()) {
             for (int columnIndex = 1; columnIndex <= resultSetMetaData.getColumnCount(); columnIndex++) {
-                System.out.printf("%-15s", resultSet.getString(columnIndex));
+                System.out.printf("%-20s", resultSet.getString(columnIndex));
             }
             System.out.println(" ");
         }
-
 
         // close connections
         resultSet.close();
