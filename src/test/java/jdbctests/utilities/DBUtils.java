@@ -1,4 +1,4 @@
-package com.jdbc.utilities;
+package jdbctests.utilities;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,16 +11,29 @@ public class DBUtils {
     private static Statement statement;
     private static ResultSet resultSet;
 
+    /**
+     * Performs connection with database
+     * Credentials is already pre-set
+     * Throws exception if connection fails
+     */
     public static void createConnection() {
-        String dbUrl = "jdbc:oracle:thin:@54.85.192.130:1521:xe";
+        String dbUrl = "jdbc:oracle:thin:@54.196.47.224:1521:1521:xe";
         String dbUsername = "hr";
         String dbPassword = "hr";
         try {
             connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Failed to connect to database.");
         }
     }
+
+    /** Performs connection with database
+     * Connection info is required. Generally, it is stored in configuration.properties
+     * @param DB_URL
+     * @param DB_USERNAME
+     * @param DB_PASSWORD
+     */
 
     public static void createConnection(String DB_URL, String DB_USERNAME, String DB_PASSWORD) {
         try {
@@ -31,6 +44,9 @@ public class DBUtils {
         }
     }
 
+    /**
+     * it is called at the end of the execution so that to destroy all connections.
+     */
     public static void destroy() {
         try {
             if (resultSet != null) {
@@ -44,6 +60,7 @@ public class DBUtils {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Failed to close all connections.");
         }
     }
 
@@ -164,8 +181,8 @@ public class DBUtils {
                 columns.add(rsmd.getColumnName(i));
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            throw new RuntimeException("Failed to get column names.");
         }
         return columns;
     }
@@ -182,6 +199,25 @@ public class DBUtils {
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            throw new RuntimeException("Failed to execute query.");
+        }
+    }
+
+    /**
+     ** Executes the given SQL statement, which may be an <code>INSERT</code>,
+     *  <code>UPDATE</code>, or <code>DELETE</code> statement or an
+     *  SQL statement that returns nothing, such as an SQL DDL statement.
+     *      *<p>
+     * @param query
+     * @return
+     */
+    public static int executeUpdate(String query){
+        try {
+            statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            return statement.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to execute update information.");
         }
     }
 

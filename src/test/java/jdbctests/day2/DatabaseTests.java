@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.*;
 
 public class DatabaseTests {
-    final String DB_URL = "jdbc:oracle:thin:@54.242.171.46:1521:xe";
+    final String DB_URL = "jdbc:oracle:thin:@54.152.21.73:1521:xe";
     final String DB_USER = "hr";
     final String DB_PASSWORD = "hr";
 
@@ -80,7 +80,9 @@ public class DatabaseTests {
 
         } while (emailExists && randomEmail.length() > 24);//if count is positive, repeat steps again until email is unique
 
-        String QUERY = "INSERT INTO employees VALUES(" + employeeId + ", '" + faker.name().firstName() + "', '" + faker.name().firstName() + "', '" + randomEmail + "', '508-598-6987', SYSDATE, 'IT_PROG', 15000, 0, NULL, NULL)";
+        String QUERY = "INSERT INTO employees VALUES(" + employeeId + ", '" +
+                faker.name().firstName() + "', '" + faker.name().firstName() +
+                "', '" + randomEmail + "', '508-598-6987', SYSDATE, 'IT_PROG', 15000, 0, NULL, NULL)";
         System.out.println("Query: " + QUERY);
 
         ResultSet resultSet3 = statement.executeQuery(QUERY);
